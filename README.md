@@ -1,1 +1,1 @@
-# mythri-jewellers
+# Mythri Jewellers
