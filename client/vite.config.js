@@ -7,4 +7,7 @@ export default defineConfig({
   define: {
     'import React from "react";': true,
   },
+  server : {
+    host : true 
+  }
 })
