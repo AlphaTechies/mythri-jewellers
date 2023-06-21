@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import multer from "multer";
 import connectDB from "./db/connectDB.js";
+import AdminRouter from "./routes/adminRoute.js";
 
 const app = express();
 dotenv.config();
@@ -16,6 +17,8 @@ const upload = multer({
     fileSize: 25 * 1024 * 1024,
   },
 });
+
+app.use("/api/admin", AdminRouter);
 
 const port = process.env.PORT || 5000;
 

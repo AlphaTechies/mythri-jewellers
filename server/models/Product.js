@@ -20,7 +20,9 @@ const ProductSchema = new mongoose.Schema(
     },
     ourPrice: {
       type: Number,
-      default: this.price,
+      default: function () {
+        return this.price;
+      }
     },
     images: [
       {
