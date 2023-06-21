@@ -29,7 +29,7 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed left-0 top-0 z-50 w-full">
+    <header className="left-0 top-0 w-full">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <Link
@@ -87,7 +87,7 @@ export function Navbar() {
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center space-x-2">
-                    <img src="logo.png" alt="Logo" className="h-8" />
+                    <img src="logo.png" alt="Logo" className="h-24" />
                   </div>
                   <div className="-mr-2">
                     <button
