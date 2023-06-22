@@ -1,95 +1,52 @@
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
-const categories = [
-  {
-    name: "Category-1",
-    image: "/categories/category-1.webp",
-  },
-  {
-    name: "Category-2",
-    image: "/categories/category-2.webp",
-  },
-  {
-    name: "Category-3",
-    image: "/categories/category-3.webp",
-  },
-  {
-    name: "Category-4",
-    image: "/categories/category-4.webp",
-  },
-  {
-    name: "Category-5",
-    image: "/categories/category-5.webp",
-  },
-  {
-    name: "Category-6",
-    image: "/categories/category-6.webp",
-  },
-  {
-    name: "Category-7",
-    image: "/categories/category-7.webp",
-  },
-  {
-    name: "Category-8",
-    image: "/categories/category-8.webp",
-  },
-  {
-    name: "Category-9",
-    image: "/categories/category-9.webp",
-  },
-  {
-    name: "Category-10",
-    image: "/categories/category-10.webp",
-  },
-];
+import { useState } from "react";
+import categories from "../utils/categories";
 
 const Categories = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
   return (
-    <div className="cursor-pointer mx-3 md:mx-10 mt-3">
-      <h2 className="text-center font-semibold text-lg m-6 text-primary">Explore our Categories</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {
-          categories.map((category,index)=>{
-            return(
-              <div key={index} className="flex items-center justify-center flex-col gap-3">
-                <div className="lg:hover:scale-110 duration-500 cursor-pointer">
-                  <img src={category.image} alt={category.name} className=""/>
-                </div>
-                <p>{category.name}</p>
-              </div>
-            )
-          })
-        }
+    <div className="mx-3 md:mx-10 mt-6">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-primary mb-4">
+          Explore Our Jewelry Categories
+        </h2>
+        <p className="text-lg text-primary">
+          Discover a wide range of exquisite jewelry pieces for every occasion.
+        </p>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+        {categories.map((category, index) => (
+          <div
+            key={index}
+            className={`flex items-center justify-center flex-col gap-3 p-4 rounded-lg cursor-pointer ${
+              selectedCategory === category ? "bg-primary" : ""
+            }`}
+            onClick={() => handleCategoryClick(category)}
+          >
+            <div className="w-32 h-32 lg:hover:scale-110 duration-500">
+              <img
+                src={category.image}
+                alt={category.name}
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+            <p
+              className={`text-center text-lg font-semibold ${
+                selectedCategory === category
+                  ? "text-secondary"
+                  : "text-primary"
+              }`}
+            >
+              {category.name}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
-    // <div className="mt-6">
-    //   <div className="">
-    //     <Splide
-    //       options={{
-    //         rewind: true,
-    //         speed: "1000",
-    //         arrows: true,
-    //         interval: 3000,
-    //         autoplay: true,
-    //         perPage: 5,
-    //       }}
-    //     >
-    //       {categories.map((category, index) => {
-    //         return (
-    //           <SplideSlide
-    //             key={index}
-    //             className="flex items-center justify-center flex-col gap-4"
-    //           >
-    //             <div className="lg:hover:scale-110 duration-500 cursor-pointer">
-    //               <img src={category.image} alt={category.name} className="" />
-    //             </div>
-    //             <p>{category.name}</p>
-    //           </SplideSlide>
-    //         );
-    //       })}
-    //     </Splide>
-    //   </div>
-    // </div>
   );
 };
 
