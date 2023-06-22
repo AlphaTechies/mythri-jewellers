@@ -27,7 +27,7 @@ const Categories = () => {
             }`}
             onClick={() => handleCategoryClick(category)}
           >
-            <div className="w-32 h-32 lg:hover:scale-110 duration-500">
+            <div className="w-32 h-32 md:w-52 md:h-36 lg:w-72 lg:h-36 px-2 lg:hover:scale-110 duration-500">
               <img
                 src={category.image}
                 alt={category.name}
