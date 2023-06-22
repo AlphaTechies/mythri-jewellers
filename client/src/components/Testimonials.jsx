@@ -32,7 +32,7 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="mx-3 md:mx-10 mt-6">
+    <div className="mx-3 md:mx-10 px-5 py-14">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-primary mb-4">Testimonials</h2>
         <p className="text-lg text-primary">
@@ -48,14 +48,16 @@ const Testimonials = () => {
             }`}
             onClick={() => handleTestimonialChange(testimonial)}
           >
-            <p className="text-lg font-semibold">{testimonial.name}</p>
+            <p className="text-lg text-primary font-semibold">
+              {testimonial.name}
+            </p>
             <div className="flex items-center mt-2">
               <p className="text-yellow-500">
                 {"★".repeat(testimonial.rating)}
               </p>
-              <p className="text-gray-500 ml-2">{testimonial.rating}</p>
+              <p className="text-primary ml-2">{testimonial.rating}</p>
             </div>
-            <p className="text-gray-500 mt-2">{testimonial.comment}</p>
+            <p className="text-primary mt-2">{testimonial.comment}</p>
           </div>
         ))}
       </div>

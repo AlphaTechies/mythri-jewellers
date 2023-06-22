@@ -41,7 +41,13 @@ const Trending = () => {
             >
               {product.name}
             </p>
-            <p className="text-sm text-gray-500">{product.price}</p>
+            <p
+              className={`text-center text-lg font-semibold ${
+                selectedProduct === product ? "text-primary" : "text-secondary"
+              }`}
+            >
+              {product.price}
+            </p>
           </div>
         ))}
       </div>
