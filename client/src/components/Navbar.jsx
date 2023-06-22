@@ -85,7 +85,7 @@ export function Navbar() {
                 {item.name === "Categories" ? (
                   <div
                     onClick={toggleSubMenu}
-                    className="font-semibold cursor-pointer px-2 text-secondary hover:rounded-full relative"
+                    className="font-semibold cursor-pointer px-2 text-secondary hover:rounded-full hover:bg-secondary hover:text-primary relative"
                   >
                     Categories
                     <svg
@@ -129,7 +129,7 @@ export function Navbar() {
                     smooth={true}
                     offset={-80}
                     duration={500}
-                    className="font-semibold cursor-pointer px-2 text-secondary hover:rounded-full"
+                    className="font-semibold cursor-pointer px-2 text-secondary hover:rounded-full hover:bg-secondary hover:text-primary"
                   >
                     {item.name}
                   </Link>
