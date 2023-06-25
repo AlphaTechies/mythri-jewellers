@@ -1,15 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import products from "../utils/products";
 
 const Trending = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);
-  };
-
   return (
-    <div className="mx-3 md:mx-10 mt-6 bg-primary p-6 rounded-lg">
+    <div className="mx-auto bg-primary rounded-lg w-full max-w-7xl items-center space-y-4 px-2 md:px-6 lg:px-8 py-10 md:space-y-0">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-secondary mb-4">
           Trending Products
@@ -18,36 +12,27 @@ const Trending = () => {
           Explore the latest trending jewelry designs.
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      <div className="grid grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
         {products.map((product, index) => (
           <div
             key={index}
-            className={`flex flex-col items-center gap-3 p-4 rounded-lg cursor-pointer ${
-              selectedProduct === product ? "bg-secondary" : ""
-            }`}
-            onClick={() => handleProductClick(product)}
+            className="relative aspect-[16/9]  w-auto rounded-md md:aspect-auto md:h-[400px]"
           >
-            <div className="w-32 h-32 md:w-52 md:h-36 lg:w-72 lg:h-36 px-2 lg:hover:scale-110 duration-500">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="object-cover w-full h-full rounded-md"
-              />
+            <img
+              src={product.image}
+              alt={product.name}
+              className="z-0 h-full w-full rounded-md object-cover"
+            />
+            <div className="absolute inset-0 rounded-md bg-gradient-to-t from-secondary to-transparent"></div>
+            <div className="absolute bottom-4 left-4 text-left">
+              <h1 className="text-lg font-semibold text-primary">
+                {product.name}
+              </h1>
+              <p className="mt-2 text-sm text-primary">{product.description}</p>
+              <button className="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-primary">
+                Shop Now &rarr;
+              </button>
             </div>
-            <p
-              className={`text-lg font-semibold ${
-                selectedProduct === product ? "text-primary" : "text-secondary"
-              }`}
-            >
-              {product.name}
-            </p>
-            <p
-              className={`text-center text-lg font-semibold ${
-                selectedProduct === product ? "text-primary" : "text-secondary"
-              }`}
-            >
-              {product.price}
-            </p>
           </div>
         ))}
       </div>
