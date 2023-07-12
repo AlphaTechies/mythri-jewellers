@@ -38,7 +38,7 @@ const Hero = () => {
             rewind: true,
             speed: "1000",
             arrows: false,
-            
+
             interval: 3000,
             autoplay: true,
           }}

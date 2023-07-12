@@ -1,5 +1,5 @@
 import React from "react";
-// import { Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Link } from "react-scroll";
 
 const routes = [
@@ -63,7 +63,7 @@ export function Navbar() {
   };
 
   return (
-    <div className="border-b">
+    <div id="home" className="border-b text-primary bg-secondary">
       <div className="mx-auto max-w-7xl">
         <div className="relative lg:px-10 flex h-16 items-center justify-between">
           <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
@@ -71,15 +71,20 @@ export function Navbar() {
           </Link>
           <nav className="flex items-center space-x-4 lg:space-x-6">
             {routes.map((route) => (
-            <Link
-              key={route.name}
-              href={route.href}
-              className={
-                'text-lg font-medium transition-colors hover:text-black text-black' 
-              }
-            >
-              {route.name}
-            </Link>
+              <Link
+                activeClass="active"
+                to={route.href}
+                spy={true}
+                smooth={true}
+                offset={-80}
+                duration={500}
+                key={route.name}
+                className={
+                  "text-lg font-medium cursor-pointer transition-colors"
+                }
+              >
+                {route.name}
+              </Link>
             ))}
           </nav>
           {/* <NavbarActions /> */}
