@@ -10,7 +10,7 @@ const images = [
 
 const Hero = () => {
   return (
-    <div className="">
+    <div className="mx-auto max-w-7xl">
       <div className="hidden md:block cursor-pointer mx-10 mt-3">
         <Splide
           options={{
@@ -20,13 +20,13 @@ const Hero = () => {
             interval: 3000,
             autoplay: true,
           }}
-          aria-label="React Splide Example"
+          aria-label="React Splide"
           data-splide-interval="1000"
         >
           {images.map((image, index) => {
             return (
               <SplideSlide key={index}>
-                <img src={image} alt="Banner" />
+                <img className="rounded-md" src={image} alt="Banner" />
               </SplideSlide>
             );
           })}
@@ -42,7 +42,7 @@ const Hero = () => {
             interval: 3000,
             autoplay: true,
           }}
-          aria-label="React Splide Example"
+          aria-label="React Splide"
           data-splide-interval="1000"
         >
           {images.map((image, index) => {
