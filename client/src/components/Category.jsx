@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import categories from "../utils/categories";
 import Filter from "./Filter";
 import Navbar from "./Navbar";
@@ -45,24 +45,28 @@ const Category = () => {
                 {/* {products.length === 0 && <NoResults />} */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {products.map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4"
-                    >
-                      {/* Image & actions */}
-                      <div className="rounded-xl bg-gray-100 relative">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="object-center rounded-md w-full"
-                        />
+                    // eslint-disable-next-line react/jsx-key
+                    <Link to={`/category/${categoryName}/${item.name}`}>
+                      <div
+                        key={index}
+                        className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4"
+                      >
+                        {/* Image & actions */}
+                        <div className="rounded-xl bg-gray-100 relative">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="object-center rounded-md w-full"
+                          />
+                        </div>
+                        {/* Description */}
+                        <div>
+                          <p className="font-semibold text-lg">{item.name}</p>
+                        </div>
+                        <div>Shop Now</div>
                       </div>
-                      {/* Description */}
-                      <div>
-                        <p className="font-semibold text-lg">{item.name}</p>
-                      </div>
-                      <div>Shop Now</div>
-                    </div>
+                    </Link>
+                    
                   ))}
                 </div>
               </div>

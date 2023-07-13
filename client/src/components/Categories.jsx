@@ -3,6 +3,7 @@ import categories from "../utils/categories";
 import { Link } from "react-router-dom";
 
 const Categories = () => {
+  
   return (
     <div id="categories" className="mx-auto max-w-7xl text-primary py-12">
       <div className="space-y-4">
