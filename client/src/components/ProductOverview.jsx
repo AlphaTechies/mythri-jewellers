@@ -1,7 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { fetchProducts } from "../redux/productSlice";
 
 export function ProductOverview() {
+  const params=useParams();
+  const{categoryName,productname}=params;
+  const products=useSelector((store)=>store.products.products);
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    const fetchResult=async()=>{
+     try{
+        await dispatch(fetchProducts());
+        console.log(products);
+     }catch(error){
+      console.log(error.message);
+     }
+    };
+    fetchResult();
+  },[dispatch])
   return (
     <div className="mx-auto max-w-7xl text-primary px-4 md:px-8 2xl:px-16">
       <div className="pt-8">
@@ -12,34 +29,37 @@ export function ProductOverview() {
             </li>
             <li className="text-body mt-0.5 text-base">/</li>
             <li className="text-body hover:text-heading px-2.5 text-sm transition duration-200 ease-in first:pl-0 last:pr-0">
-              <Link className="capitalize" to="/products">
-                products
+              <Link className="capitalize" to={`/category/${categoryName}`}>
+                {categoryName}
               </Link>
             </li>
             <li className="text-body mt-0.5 text-base">/</li>
             <li className="text-body hover:text-heading px-2.5 text-sm transition duration-200 ease-in first:pl-0 last:pr-0">
-              <Link className="capitalize" to="/products/ring">
-                Ring
+              <Link className="capitalize" to={`/category/${categoryName}/${productname}`}>
+                {productname}
               </Link>
             </li>
           </ol>
         </div>
       </div>
       <div className="block grid-cols-9 items-start gap-x-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
-        <div className="col-span-5 grid grid-cols-2 gap-2.5">
+        {products.filter((item)=>item.category===categoryName && item.name===productname).map((item,index)=>(
+          <div key={index}className="col-span-5 grid grid-cols-2 gap-2.5">
           {Array.from({ length: 4 }, (_, i) => (
             <div
               key={i}
               className="col-span-1 transition duration-150 ease-in hover:opacity-90"
             >
               <img
-                src="/categories/category-1.webp"
+                src={item.images[i]}
                 alt="ring"
                 className="w-full object-cover"
               />
             </div>
           ))}
         </div>
+        ))}
+        
         <div className="col-span-4 pt-8 lg:pt-0">
           <div className="mb-7 border-b border-primary pb-7">
             <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">

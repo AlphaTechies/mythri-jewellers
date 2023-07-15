@@ -1,7 +1,21 @@
-import React, { useState } from "react";
-import products from "../utils/products";
+import React, { useEffect } from "react";
+import { fetchProducts } from "../redux/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Trending = () => {
+  const dispatch=useDispatch();
+  const products=useSelector((store)=>store.products.products);
+  useEffect(()=>{
+    const fetchResult=async()=>{
+     try{
+        await dispatch(fetchProducts());
+        console.log(products);
+     }catch(error){
+      console.log(error.message);
+     }
+    };
+    fetchResult();
+  },[dispatch])
   return (
     <div className="mx-auto bg-primary rounded-lg w-full max-w-7xl items-center space-y-4 px-2 md:px-6 lg:px-8 py-10 md:space-y-0">
       <div className="text-center">
@@ -13,7 +27,7 @@ const Trending = () => {
         </p>
       </div>
       <div className="grid grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        {products.map((product, index) => (
+        {products.filter((item)=>item.trending).map((product, index) => (
           <div
             key={index}
             className="relative aspect-[16/9]  w-auto rounded-md md:aspect-auto md:h-[400px]"
