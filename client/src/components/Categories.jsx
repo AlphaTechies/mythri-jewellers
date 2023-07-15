@@ -1,9 +1,20 @@
-import React from "react";
-import categories from "../utils/categories";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../redux/productSlice";
 const Categories = () => {
-  
+  const dispatch=useDispatch();
+  const products=useSelector((store)=>store.products.products);
+  useEffect(()=>{
+    const fetchResult=async()=>{
+     try{
+        await dispatch(fetchProducts());
+     }catch(error){
+      console.log(error.message);
+     }
+    };
+    fetchResult();
+  },[dispatch])
   return (
     <div id="categories" className="mx-auto max-w-7xl text-primary py-12">
       <div className="space-y-4">
@@ -11,7 +22,7 @@ const Categories = () => {
           <h3 className="font-bold text-2xl pb-8">Categories</h3>
           {/* {items.length === 0 && <NoResults />} */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
+            {products.map((category, index) => (
               <Link
                 to={`/category/${category.name}`}
                 key={index}

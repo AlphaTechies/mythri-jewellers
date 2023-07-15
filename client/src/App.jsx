@@ -1,10 +1,11 @@
 import React from "react";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import Category from "./components/Category";
 import ProductOverview from "./components/ProductOverview";
+import ProtectedLayout from "./pages/admin/ProtectedLayout";
+import LoginPage from "./pages/admin/Login";
 function App() {
   return (
     <Router>
@@ -13,6 +14,9 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/category/:categoryName" element={<Category />} />
         <Route path="/category/:categoryName/:productname" element={<ProductOverview />} />
+        <Route path='/admin' element={<ProtectedLayout />}>
+        </Route>
+        <Route path="login" element={<LoginPage />} />
       </Routes>
     </Router>
   );

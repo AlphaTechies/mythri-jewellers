@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import categories from "../utils/categories";
 import Filter from "./Filter";
 import Navbar from "./Navbar";
 import MobileFilter from "./MobileFilter";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../redux/productSlice";
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -25,7 +26,19 @@ const Category = () => {
       name: "Extra small",
     },
   ];
-  const products = categories;
+  const products=useSelector((store)=>store.products.products);
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    const fetchResult=async()=>{
+     try{
+        await dispatch(fetchProducts());
+        console.log(products);
+     }catch(error){
+      console.log(error.message);
+     }
+    };
+    fetchResult();
+  },[dispatch])
   return (
     <div className="">
       <Navbar />
@@ -44,7 +57,7 @@ const Category = () => {
               <div className="mt-6 lg:col-span-4 lg:mt-0">
                 {/* {products.length === 0 && <NoResults />} */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {products.map((item, index) => (
+                  {products.filter((item) => item.category === categoryName).map((item, index) => (
                     // eslint-disable-next-line react/jsx-key
                     <Link to={`/category/${categoryName}/${item.name}`}>
                       <div
