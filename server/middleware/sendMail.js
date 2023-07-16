@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
-export const sendMail = async (email,message) => {
+
+export const sendMail = async (email, message) => {
   try {
     // Create a transporter
     const transporter = nodemailer.createTransport({
@@ -15,7 +16,7 @@ export const sendMail = async (email,message) => {
       from: email,
       to: "tangleddevs@gmail.com",
       subject: "Message from Mythri Jewellers",
-      text:message,
+      text: message,
     };
 
     // Send the email
