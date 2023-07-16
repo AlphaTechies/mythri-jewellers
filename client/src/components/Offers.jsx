@@ -1,4 +1,5 @@
 import products from "../utils/products";
+import { Link } from "react-router-dom";
 
 const Offers = () => {
   const discountedProducts = products.filter(
@@ -16,9 +17,9 @@ const Offers = () => {
           Take advantage of these exclusive discounts on selected products.
         </p>
       </div>
-      <div className="grid grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
         {discountedProducts.map((product, index) => (
-          <div
+          <Link
             key={index}
             className="relative aspect-[16/9]  w-auto rounded-md md:aspect-auto md:h-[400px]"
           >
@@ -37,7 +38,7 @@ const Offers = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -52,15 +52,15 @@ const routes = [
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
+  // const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleSubMenu = () => {
-    setIsSubMenuOpen(!isSubMenuOpen);
-  };
+  // const toggleSubMenu = () => {
+  //   setIsSubMenuOpen(!isSubMenuOpen);
+  // };
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-secondary border-b-2 border-primary">

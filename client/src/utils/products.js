@@ -42,18 +42,6 @@ const products = [
     discountedPrice: "900 INR",
   },
   {
-    name: "Brooches",
-    image: "/categories/category-8.webp",
-    price: "700 INR",
-    discountedPrice: "550 INR",
-  },
-  {
-    name: "Charms",
-    image: "/categories/category-9.webp",
-    price: "800 INR",
-    discountedPrice: "650 INR",
-  },
-  {
     name: "Watches",
     image: "/categories/category-10.webp",
     price: "2000 INR",
