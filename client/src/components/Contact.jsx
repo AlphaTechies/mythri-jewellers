@@ -19,7 +19,7 @@ const Contact = () => {
     console.log(formData);
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/mail", formData);
+      const res = await axios.post("http://localhost:5000/api/messages/send", formData);
       if (res.status === 200) {
         console.log("Email sent successfully!");
         setFormData({

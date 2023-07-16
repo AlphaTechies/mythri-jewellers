@@ -5,7 +5,7 @@ import multer from "multer";
 import connectDB from "./db/connectDB.js";
 import AdminRouter from "./routes/adminRoute.js";
 import ProductRouter from "./routes/productRoute.js";
-
+import contactRouter from "./routes/contactRoutes.js";
 const app = express();
 dotenv.config();
 
@@ -21,7 +21,7 @@ const upload = multer({
 
 app.use("/api/admin", AdminRouter);
 app.use("/api/products", ProductRouter);
-
+app.use("/api/messages",contactRouter);
 const port = process.env.PORT || 5000;
 
 // Start the server
