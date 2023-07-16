@@ -6,7 +6,10 @@ const Offers = () => {
   );
 
   return (
-    <div className="mx-auto w-full max-w-7xl items-center space-y-4 px-2 py-10 md:space-y-0">
+    <div
+      id="offers"
+      className="mx-auto w-full max-w-7xl items-center space-y-4 px-2 py-10 md:space-y-0"
+    >
       <div className="text-center">
         <h2 className="text-3xl font-bold text-primary mb-4">Special Offers</h2>
         <p className="text-lg text-primary">

@@ -18,7 +18,10 @@ const Trending = () => {
     fetchResult();
   }, [dispatch]);
   return (
-    <div className="mx-auto bg-primary rounded-lg w-full max-w-7xl items-center space-y-4 px-2 md:px-6 lg:px-8 py-10 md:space-y-0">
+    <div
+      id="trending"
+      className="mx-auto bg-primary rounded-lg w-full max-w-7xl items-center space-y-4 px-2 md:px-6 lg:px-8 py-10 md:space-y-0"
+    >
       <div className="text-center">
         <h2 className="text-3xl font-bold text-secondary mb-4">
           Trending Products

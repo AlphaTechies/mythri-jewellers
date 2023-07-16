@@ -10,7 +10,7 @@ const images = [
 
 const Hero = () => {
   return (
-    <div className="mx-auto max-w-7xl pt-24">
+    <div id="home" className="mx-auto max-w-7xl pt-24">
       <div className="hidden md:block cursor-pointer mx-10 mt-3">
         <Splide
           options={{
