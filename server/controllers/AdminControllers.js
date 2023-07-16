@@ -132,7 +132,7 @@ export const addAdmin = asyncHandler(async (req, res, next) => {
   }
 });
 
-//Add Product
+// Add Product
 export const addProduct = asyncHandler(async (req, res, next) => {
   const { name, category, trending, weight, price, ourPrice } = req.body;
   if (!name || !category || !trending || !weight || !price || !ourPrice) {
@@ -145,7 +145,7 @@ export const addProduct = asyncHandler(async (req, res, next) => {
     if (isProduct) {
       return res
         .status(StatusCodes.CONFLICT)
-        .json({ message: "Product Already Exists !", status: "failed" });
+        .json({ message: "Product Already Exists!", status: "failed" });
     }
     const product = new Product({
       name,
@@ -156,14 +156,19 @@ export const addProduct = asyncHandler(async (req, res, next) => {
       ourPrice,
     });
 
-    console.log(req.file);
-    console.log(Objects.keys(req));
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        await uploadImage(file, "product-images", product._id);
+      }
 
-    if (req.file) {
-      await uploadImage(req.file, "product-images", product._id);
+      const imageUrls = req.files.map(
+        (file) =>
+          `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/product-images/${product._id}/${file.originalname}`
+      );
 
-      product.images = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/product-images/${product._id}/${req.file.originalname}`;
+      product.images = imageUrls;
     }
+
     const createdProduct = await product.save();
     return res
       .status(StatusCodes.CREATED)
