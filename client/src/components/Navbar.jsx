@@ -68,10 +68,10 @@ export function Navbar() {
       <div className="mx-auto relative flex max-w-7xl items-center justify-between px-2 py-2 lg:py-4 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <RouterLink to="/" className="ml-2 flex lg:ml-0 gap-x-2">
-            <p className="font-bold text-3xl">Mythri</p>
+            <p className="font-bold text-primary text-3xl">Mythri</p>
           </RouterLink>
         </div>
-        <nav className="items-center space-x-4 hidden lg:block lg:space-x-6">
+        <nav className="items-center space-x-4 text-primary hidden lg:block lg:space-x-6">
           {routes.map((route) => (
             <Link
               activeClass="active"

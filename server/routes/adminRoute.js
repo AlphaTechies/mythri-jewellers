@@ -1,5 +1,6 @@
 import express from "express";
 import isAuthenticated from "../middleware/auth.js";
+
 import {
   Login,
   addAdmin,
