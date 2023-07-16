@@ -24,13 +24,11 @@ const ProductSchema = new mongoose.Schema(
         return this.price;
       },
     },
-    images: [
-      {
-        type: String,
-        default:
-          "https://mythri-jewellers.s3.ap-south-1.amazonaws.com/category-1.webp",
-      },
-    ],
+    images: {
+      type: String,
+      default:
+        "https://mythri-jewellers.s3.ap-south-1.amazonaws.com/category-1.webp",
+    },
     trending: {
       type: Boolean,
       default: false,

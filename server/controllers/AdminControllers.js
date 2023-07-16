@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import asyncHandler from "express-async-handler";
 import Admin from "../models/Admin.js";
 import Product from "../models/Product.js";
+import { uploadImage } from "../middleware/upload.js";
 
 //Admin Login
 export const Login = asyncHandler(async (req, res, next) => {
@@ -146,11 +147,27 @@ export const addProduct = asyncHandler(async (req, res, next) => {
         .status(StatusCodes.CONFLICT)
         .json({ message: "Product Already Exists !", status: "failed" });
     }
-    const product = await Product.create(req.body);
-    const ProductData = await Product.findOne({ _id: product._id });
+    const product = new Product({
+      name,
+      category,
+      trending,
+      weight,
+      price,
+      ourPrice,
+    });
+
+    console.log(req.file);
+    console.log(Objects.keys(req));
+
+    if (req.file) {
+      await uploadImage(req.file, "product-images", product._id);
+
+      product.images = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/product-images/${product._id}/${req.file.originalname}`;
+    }
+    const createdProduct = await product.save();
     return res
       .status(StatusCodes.CREATED)
-      .json({ message: "Product created", ProductData, status: "success" });
+      .json({ message: "Product created", createdProduct, status: "success" });
   } catch (err) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -172,13 +189,11 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
       req.body,
       { new: true, runValidators: true, useFindAndModify: false }
     );
-    return res
-      .status(StatusCodes.OK)
-      .json({
-        message: "Product Updated !",
-        updatedProduct,
-        status: "success",
-      });
+    return res.status(StatusCodes.OK).json({
+      message: "Product Updated !",
+      updatedProduct,
+      status: "success",
+    });
   } catch (err) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
