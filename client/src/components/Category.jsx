@@ -61,10 +61,10 @@ const Category = () => {
                 <Filter valueKey="colorId" name="Colors" data={data} />
               </div>
               <div className="mt-6 lg:col-span-4 lg:mt-0">
-                {/* {products.length === 0 && <NoResults />} */}
+                {products.length === 0 && <h1>No Results</h1>}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {products
-                    // .filter((item) => item.category === categoryName)
+                    .filter((item) => item.category === categoryName)
                     .map((item, index) => (
                       // eslint-disable-next-line react/jsx-key
                       <Link to={`/category/${categoryName}/${item.name}`}>
