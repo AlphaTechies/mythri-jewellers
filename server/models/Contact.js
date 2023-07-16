@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import validator from "validator";
 const contactModel=mongoose.Schema({
     name:{type:String,required:true},
     email:{type: String,

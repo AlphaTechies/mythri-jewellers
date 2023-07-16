@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import asyncHandler from "express-async-handler";
-import Contact from "../models/Contact";
-import { sendMail } from "../middleware/sendMail";
+import Contact from "../models/Contact.js";
+import { sendMail } from "../middleware/sendMail.js";
 
 export const sendDetails = asyncHandler(async (req, res) => {
   const { name, email, message } = req.body;

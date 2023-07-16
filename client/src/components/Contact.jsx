@@ -28,6 +28,7 @@ const Contact = () => {
           message: "",
         });
       }
+      window.location.reload();
     } catch (error) {
       console.error("Failed to send email", error.message);
     }
