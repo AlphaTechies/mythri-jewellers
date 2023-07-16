@@ -1,6 +1,7 @@
 import React from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-scroll";
+import { Link as RouterLink } from "react-router-dom";
 
 const routes = [
   {
@@ -66,9 +67,9 @@ export function Navbar() {
     <header className="fixed left-0 top-0 z-50 w-full bg-secondary border-b-2 border-primary">
       <div className="mx-auto relative flex max-w-7xl items-center justify-between px-2 py-2 lg:py-4 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
-          <Link href="/" className="ml-2 flex lg:ml-0 gap-x-2">
+          <RouterLink to="/" className="ml-2 flex lg:ml-0 gap-x-2">
             <p className="font-bold text-3xl">Mythri</p>
-          </Link>
+          </RouterLink>
         </div>
         <nav className="items-center space-x-4 hidden lg:block lg:space-x-6">
           {routes.map((route) => (
