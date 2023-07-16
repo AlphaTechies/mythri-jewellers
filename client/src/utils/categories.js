@@ -27,14 +27,14 @@ const categories = [
     name: "Bangles",
     image: "/categories/category-4.webp",
   },
-  {
-    name: "Brooches",
-    image: "/categories/category-8.webp",
-  },
-  {
-    name: "Charms",
-    image: "/categories/category-9.webp",
-  },
+  // {
+  //   name: "Brooches",
+  //   image: "/categories/category-8.webp",
+  // },
+  // {
+  //   name: "Charms",
+  //   image: "/categories/category-9.webp",
+  // },
   {
     name: "Watches",
     image: "/categories/category-10.webp",
