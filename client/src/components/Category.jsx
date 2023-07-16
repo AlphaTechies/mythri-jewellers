@@ -66,12 +66,11 @@ const Category = () => {
                   {products
                     .filter((item) => item.category === categoryName)
                     .map((item, index) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <Link to={`/category/${categoryName}/${item.name}`}>
-                        <div
-                          key={index}
-                          className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4"
-                        >
+                      <Link
+                        key={index}
+                        to={`/category/${categoryName}/${item.name}`}
+                      >
+                        <div className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
                           {/* Image & actions */}
                           <div>
                             <img
