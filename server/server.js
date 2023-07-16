@@ -12,16 +12,16 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-const upload = multer({
-  storage: multer.memoryStorage(),
+export const upload = multer({
+  storage: multer.memoryStorage(), // Store the file in memory as a Buffer
   limits: {
-    fileSize: 25 * 1024 * 1024,
+    fileSize: 25 * 1024 * 1024, // Limit the file size to 25MB
   },
 });
 
-app.use("/api/admin", AdminRouter);
+app.use("/api/admin", upload.array("productImages", 5), AdminRouter);
 app.use("/api/products", ProductRouter);
-app.use("/api/messages",contactRouter);
+app.use("/api/messages", contactRouter);
 const port = process.env.PORT || 5000;
 
 // Start the server

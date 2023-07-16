@@ -19,23 +19,28 @@ const Offers = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
         {discountedProducts.map((product, index) => (
-          <Link
-            key={index}
-            className="relative aspect-[16/9]  w-auto rounded-md md:aspect-auto md:h-[400px]"
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="object-cover w-full h-full rounded-md"
-            />
-            <div className="absolute inset-0 rounded-md bg-gradient-to-t from-primary to-transparent"></div>
-            <div className="absolute text-secondary bottom-4 left-4 text-left">
-              <p className="bottom-4 left-4 text-left">{product.name}</p>
-              <div className="flex items-center justify-center mt-2">
-                <p className="text-sm line-through">{product.price}</p>
-                <p className="ml-2 text-xl font-semibold">
-                  {product.discountedPrice}
-                </p>
+          <Link key={index}>
+            <div className="rounded-xl bg-secondary relative">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="object-cover w-full h-full rounded-md"
+              />
+              <div className="absolute inset-0 rounded-md bg-gradient-to-t from-primary to-transparent"></div>
+
+              <div className="absolute bottom-4 left-4 text-left">
+                <h1 className="text-lg font-semibold text-secondary">
+                  {product.name}
+                </h1>
+                <div className="flex items-center justify-center text-secondary mt-2">
+                  <p className="text-sm line-through">{product.price}</p>
+                  <p className="ml-2 text-xl font-semibold">
+                    {product.discountedPrice}
+                  </p>
+                </div>
+                <button className="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-secondary">
+                  Shop Now &rarr;
+                </button>
               </div>
             </div>
           </Link>

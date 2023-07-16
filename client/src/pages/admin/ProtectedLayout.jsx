@@ -1,21 +1,23 @@
-import React, { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import Header from '../../components/Header'
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
+import Navbar from "../../components/admin/Navbar";
+import { useSelector } from "react-redux";
 
 const ProtectedLayout = () => {
-    const user = null;
-    const navigate = useNavigate();
-    useEffect(() => {
-        if(!user) {
-            navigate('/login');
-        }
-    }, [navigate])
+  const user = useSelector((state) => state.admin.admin);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
   return (
     <main>
-        <Header />
-        <Outlet />
+      <Navbar />
+      <Outlet />
     </main>
-  )
-}
+  );
+};
 
-export default ProtectedLayout
+export default ProtectedLayout;

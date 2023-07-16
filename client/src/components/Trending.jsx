@@ -50,8 +50,6 @@ const Trending = () => {
                   Shop Now &rarr;
                 </button>
               </div>
-
-              <div>Shop Now</div>
             </div>
           </Link>
         ))}

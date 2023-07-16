@@ -9,69 +9,31 @@ const routes = [
     href: "home",
   },
   {
-    name: "About",
-    href: "about",
+    name: "Product",
+    href: "product",
   },
   {
-    name: "Categories",
-    href: "categories",
-    subMenu: [
-      { name: "Earring", href: "earring" },
-      { name: "Necklace", href: "necklace" },
-      { name: "Bangle", href: "bangle" },
-      { name: "Ring", href: "ring" },
-      { name: "Bracelet", href: "bracelet" },
-      { name: "Pendant", href: "pendant" },
-      { name: "Anklet", href: "anklet" },
-      { name: "Nosepin", href: "nosepin" },
-      { name: "Chain", href: "chain" },
-      { name: "Mangalsutra", href: "mangalsutra" },
-      { name: "Toe Ring", href: "toe-ring" },
-      // { name: "Waist Chain", href: "waist-chain" },
-      // { name: "Brooch", href: "brooch" },
-      // { name: "Hair Accessory", href: "hair-accessory" },
-      // { name: "Bridal Set", href: "bridal-set" },
-      // { name: "Maang Tikka", href: "maang-tikka" },
-      // { name: "Bajuband", href: "bajuband" },
-      // { name: "Kamarband", href: "kamarband" },
-      // { name: "Armlet", href: "armlet" },
-      // { name: "Choker", href: "choker" },
-      // { name: "Tikka", href: "tikka" },
-      // { name: "Belt", href: "belt" },
-      // { name: "Key Chain", href: "key-chain" },
-    ],
-  },
-  {
-    name: "Trending",
-    href: "trending",
-  },
-  {
-    name: "Offers",
-    href: "offers",
+    name: "Responses",
+    href: "responses",
   },
 ];
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  // const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // const toggleSubMenu = () => {
-  //   setIsSubMenuOpen(!isSubMenuOpen);
-  // };
-
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-secondary border-b-2 border-primary">
-      <div className="mx-auto relative flex max-w-7xl items-center justify-between px-2 py-2 lg:py-4 sm:px-6 lg:px-8">
-        <div className="inline-flex items-center space-x-2">
+      <div className="mx-auto relative flex max-w-7xl items-center md:justify-between px-2 py-2 lg:py-4 sm:px-6 lg:px-8">
+        <div className="inline-flex flex-1 md:flex-initial items-center space-x-2">
           <RouterLink to="/" className="ml-2 flex lg:ml-0 gap-x-2">
-            <p className="font-bold text-primary text-3xl">Mythri</p>
+            <p className="font-bold text-3xl">Mythri</p>
           </RouterLink>
         </div>
-        <nav className="items-center space-x-4 text-primary hidden lg:block lg:space-x-6">
+        <nav className="items-center space-x-4 hidden lg:block lg:space-x-6">
           {routes.map((route) => (
             <Link
               activeClass="active"
@@ -81,12 +43,17 @@ export function Navbar() {
               offset={-80}
               duration={500}
               key={route.name}
-              className={"text-lg font-medium cursor-pointer transition-colors"}
+              className={"text-xl font-medium cursor-pointer transition-colors"}
             >
               {route.name}
             </Link>
           ))}
         </nav>
+        <div>
+          <button className="w-10 h-10 rounded-full bg-violet-600 text-white">
+            A
+          </button>
+        </div>
         <div className="lg:hidden p-2">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
         </div>

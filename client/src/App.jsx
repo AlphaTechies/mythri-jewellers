@@ -6,6 +6,9 @@ import Category from "./components/Category";
 import ProductOverview from "./components/ProductOverview";
 import ProtectedLayout from "./pages/admin/ProtectedLayout";
 import LoginPage from "./pages/admin/Login";
+import Responses from "./pages/admin/Responses";
+import Dashboard from "./pages/admin/Dashboard";
+import AddProduct from "./pages/admin/AddProduct";
 function App() {
   return (
     <Router>
@@ -13,8 +16,14 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/product" element={<Product />} />
         <Route path="/category/:categoryName" element={<Category />} />
-        <Route path="/category/:categoryName/:productname" element={<ProductOverview />} />
-        <Route path='/admin' element={<ProtectedLayout />}>
+        <Route
+          path="/category/:categoryName/:productname"
+          element={<ProductOverview />}
+        />
+        <Route path="/admin" element={<ProtectedLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="product" element={<AddProduct />} />
+          <Route path="responses" element={<Responses />} />
         </Route>
         <Route path="login" element={<LoginPage />} />
       </Routes>
