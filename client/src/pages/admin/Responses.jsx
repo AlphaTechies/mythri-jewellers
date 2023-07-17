@@ -5,9 +5,9 @@ import { getMessages } from "../../redux/adminSlice";
 
 const Responses = () => {
   const dispatch=useDispatch();
-  const messages=useSelector((state)=>state.adminReducer.messages);
+  const messages=useSelector((state)=>state.admin.messages);
   useEffect(()=>{
-    dispatch(getMessages);
+    dispatch(getMessages());
   },[dispatch])
   return (
     <section className="pt-24 max-w-7xl mx-auto px-8">

@@ -46,7 +46,7 @@ const AddProduct = () => {
         <Rings
           height="80"
           width="80"
-          color="#21BF73"
+          color="#523C1E"
           radius="6"
           wrapperStyle={{}}
           wrapperClass=""
@@ -62,7 +62,7 @@ const AddProduct = () => {
       <div className="pt-24 max-w-7xl mx-auto px-8">
         <h2 className="mb-4 text-xl font-bold text-primary">Add Product</h2>
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 sm:grid-cols-2 border-2 border-primary rounded-lg p-4 sm:gap-6">
+          <div className="grid gap-4 sm:grid-cols-2 bg-white border-2 border-primary rounded-lg p-4 sm:gap-6">
             <div className="sm:col-span-2">
               <label
                 htmlFor="title"
