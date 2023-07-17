@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Rings } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { addProduct } from "../../redux/adminSlice";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -32,8 +33,7 @@ const AddProduct = () => {
     formData.append("category", category);
 
     try {
-      await dispatch(addBook(formData));
-      dispatch(fetchBooks());
+      await dispatch(addProduct(formData));
       navigate("/", { replace: true });
     } catch (error) {
       console.error("Error:", error);

@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-
 const Response = ({ response }) => {
   return (
     <div className="bg-white rounded-md p-4 border font-light">
