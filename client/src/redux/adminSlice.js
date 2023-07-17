@@ -20,6 +20,14 @@ export const adminLogin = createAsyncThunk(
   }
 );
 
+// Async thunk action to handle user logout
+export const adminLogout = createAsyncThunk("auth/logout", async () => {
+  // Clearing local storage and reset the state
+  localStorage.removeItem("admin");
+  localStorage.removeItem("token");
+  return null;
+});
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -47,6 +55,12 @@ const adminSlice = createSlice({
         state.loading = false;
         state.error = payload.error.message;
       });
+
+    builder.addCase(adminLogout.fulfilled, (state) => {
+      state.admin = null;
+      state.token = null;
+      // toast.success("Logout successful!");
+    });
   },
 });
 

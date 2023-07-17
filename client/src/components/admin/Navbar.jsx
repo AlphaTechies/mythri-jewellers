@@ -1,15 +1,18 @@
 import React from "react";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-scroll";
-import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FiLogOut } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { adminLogout } from "../../redux/adminSlice";
 
 const routes = [
   {
     name: "Home",
-    href: "home",
+    href: "/admin",
   },
   {
-    name: "Product",
+    name: "Add Product",
     href: "product",
   },
   {
@@ -19,7 +22,14 @@ const routes = [
 ];
 
 export function Navbar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const handleLogout = () => {
+    dispatch(adminLogout());
+    navigate("/login", { replace: true });
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -29,11 +39,11 @@ export function Navbar() {
     <header className="fixed left-0 top-0 z-50 w-full bg-secondary border-b-2 border-primary">
       <div className="mx-auto relative flex max-w-7xl items-center md:justify-between px-2 py-2 lg:py-4 sm:px-6 lg:px-8">
         <div className="inline-flex flex-1 md:flex-initial items-center space-x-2">
-          <RouterLink to="/" className="ml-2 flex lg:ml-0 gap-x-2">
+          <Link to="/" className="ml-2 flex lg:ml-0 gap-x-2">
             <p className="font-bold text-3xl">Mythri</p>
-          </RouterLink>
+          </Link>
         </div>
-        <nav className="items-center space-x-4 hidden lg:block lg:space-x-6">
+        <nav className="items-center space-x-6 hidden lg:block lg:space-x-8">
           {routes.map((route) => (
             <Link
               activeClass="active"
@@ -50,8 +60,15 @@ export function Navbar() {
           ))}
         </nav>
         <div>
-          <button className="w-10 h-10 rounded-full bg-violet-600 text-white">
-            A
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center rounded-full space-x-2 bg-primary text-secondary"
+          >
+            <Link to={"/login"}>
+              <span>
+                <FiLogOut className="text-secondary p-2" size={35} />
+              </span>
+            </Link>
           </button>
         </div>
         <div className="lg:hidden p-2">

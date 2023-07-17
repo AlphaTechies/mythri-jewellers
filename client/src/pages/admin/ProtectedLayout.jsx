@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
 import Navbar from "../../components/admin/Navbar";
 import { useSelector } from "react-redux";
 
