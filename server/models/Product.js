@@ -35,16 +35,14 @@ const ProductSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-  },
-  {
-    virtuals: {
-      discount: {
-        get() {
-          return ((this.price - this.ourPrice) * 100) / this.price;
-        },
+    discount: {
+      type: Number,
+      virtual: true, // Set virtual: true to indicate it's a virtual field
+      get() {
+        return ((this.price - this.ourPrice) * 100) / this.price;
       },
     },
-  }
+  },
 );
 
 export default mongoose.model("Product", ProductSchema);

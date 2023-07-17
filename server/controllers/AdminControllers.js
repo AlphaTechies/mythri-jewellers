@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import Admin from "../models/Admin.js";
 import Product from "../models/Product.js";
 import { uploadImage } from "../middleware/upload.js";
-
+import Contact from "../models/Contact.js";
 //Admin Login
 export const Login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;

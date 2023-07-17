@@ -61,7 +61,7 @@ const Category = () => {
                 <Filter valueKey="colorId" name="Colors" data={data} />
               </div>
               <div className="mt-6 lg:col-span-4 lg:mt-0">
-                {products.length === 0 && <h1>No Results</h1>}
+                {products.length === 0 && <div className="text-black font-bold flex justify-center">No Results</div>}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {products
                     .filter((item) => item.category === categoryName)
@@ -73,8 +73,8 @@ const Category = () => {
                         <div className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
                           {/* Image & actions */}
                           <div>
-                            <img
-                              src={item.images}
+                              <img
+                              src={item.images.filter((img)=>img!=null)[0]}
                               alt={item.name}
                               className="aspect-[16/9] w-full rounded-md md:aspect-auto md:h-[300px] lg:h-[200px]"
                             />

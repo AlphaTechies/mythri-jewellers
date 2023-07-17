@@ -1,11 +1,23 @@
-import products from "../utils/products";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchProducts } from "../redux/productSlice";
 
 const Offers = () => {
-  const discountedProducts = products.filter(
-    (product) => product.discountedPrice
-  );
-
+  const products = useSelector((store) => store.products.products);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchResult = async () => {
+      try {
+        await dispatch(fetchProducts());
+        console.log(products);
+        console.log(products[0].discount);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchResult();
+  }, [dispatch]);
   return (
     <div
       id="offers"
@@ -18,7 +30,7 @@ const Offers = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        {discountedProducts.map((product, index) => (
+        {products.filter((item)=>item.discount>20).map((product, index) => (
           <Link key={index}>
             <div className="rounded-xl bg-secondary relative">
               <img
