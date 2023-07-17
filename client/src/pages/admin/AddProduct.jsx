@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Rings } from "react-loader-spinner";
+// import { Rings } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -10,22 +10,24 @@ const AddProduct = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.products.loading);
 
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
+  const [name, setName] = useState("");
+  const [weight, setWeight] = useState(0);
   const [description, setDescription] = useState("");
-  const [coverImage, setCoverImage] = useState(null);
+  const [productImages, setProductImages] = useState(null);
   const [category, setCategory] = useState("");
+  const [price, setPrice] = useState(0);
+  const [ourPrice, setOurPrice] = useState(0);
 
   const handleFileChange = (e) => {
-    setCoverImage(e.target.files[0]);
-    toast.success("Cover image uploaded successfully");
+    setProductImages(e.target.files[0]);
+    // toast.success("Cover image uploaded successfully");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("name", name);
     formData.append("author", author);
     formData.append("description", description);
     formData.append("coverImage", coverImage);
@@ -40,22 +42,22 @@ const AddProduct = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Rings
-          height="80"
-          width="80"
-          color="#523C1E"
-          radius="6"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-          ariaLabel="rings-loading"
-        />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <Rings
+  //         height="80"
+  //         width="80"
+  //         color="#523C1E"
+  //         radius="6"
+  //         wrapperStyle={{}}
+  //         wrapperClass=""
+  //         visible={true}
+  //         ariaLabel="rings-loading"
+  //       />
+  //     </div>
+  //   );
+  // }
 
   return (
     <section className="bg-secondary">
@@ -72,48 +74,14 @@ const AddProduct = () => {
               </label>
               <input
                 type="text"
-                name="title"
-                id="title"
+                name="name"
+                id="name"
                 className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 placeholder-gray-500 caret-black block w-full p-2.5"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Type product name"
                 required
               />
-            </div>
-            <div className="w-full">
-              <label
-                htmlFor="author"
-                className="block mb-2 text-sm font-medium text-black"
-              >
-                Author
-              </label>
-              <input
-                type="text"
-                name="author"
-                id="author"
-                className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 placeholder-gray-500 caret-black block w-full p-2.5"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                placeholder="Book author"
-                required
-              />
-            </div>
-            <div className="w-full">
-              <label
-                htmlFor="description"
-                className="block mb-2 text-sm font-medium text-black"
-              >
-                Description
-              </label>
-              <textarea
-                id="description"
-                rows="8"
-                className="block p-2.5 w-full text-sm text-black bg-white rounded-lg border border-black placeholder-gray-500 caret-black focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Your description here"
-              ></textarea>
             </div>
             <div>
               <label
@@ -149,6 +117,41 @@ const AddProduct = () => {
                 <option value="poetry">Poetry</option>
               </select>
             </div>
+            <div className="w-full">
+              <label
+                htmlFor="author"
+                className="block mb-2 text-sm font-medium text-black"
+              >
+                Author
+              </label>
+              <input
+                type="text"
+                name="author"
+                id="author"
+                className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 placeholder-gray-500 caret-black block w-full p-2.5"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="Book author"
+                required
+              />
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="description"
+                className="block mb-2 text-sm font-medium text-black"
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                rows="8"
+                className="block p-2.5 w-full text-sm text-black bg-white rounded-lg border border-black placeholder-gray-500 caret-black focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Your description here"
+              ></textarea>
+            </div>
+
             <div>
               <label
                 htmlFor="coverImage"
