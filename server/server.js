@@ -19,7 +19,7 @@ export const upload = multer({
   },
 });
 
-app.use("/api/admin", upload.array("productImages", 5), AdminRouter);
+app.use("/api/admin", upload.array("productImages", 4), AdminRouter);
 app.use("/api/products", ProductRouter);
 app.use("/api/messages", contactRouter);
 const port = process.env.PORT || 5000;
