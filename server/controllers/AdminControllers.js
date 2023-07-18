@@ -134,8 +134,17 @@ export const addAdmin = asyncHandler(async (req, res, next) => {
 
 // Add Product
 export const addProduct = asyncHandler(async (req, res, next) => {
-  const { name, category, trending, weight, price, ourPrice } = req.body;
-  if (!name || !category || !trending || !weight || !price || !ourPrice) {
+  const { name, category, trending, weight, price, ourPrice, description } =
+    req.body;
+  if (
+    !name ||
+    !category ||
+    !trending ||
+    !weight ||
+    !price ||
+    !ourPrice ||
+    !description
+  ) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ message: "Please fill all details", status: "failed" });
@@ -154,6 +163,7 @@ export const addProduct = asyncHandler(async (req, res, next) => {
       weight,
       price,
       ourPrice,
+      description,
     });
 
     if (req.files && req.files.length > 0) {

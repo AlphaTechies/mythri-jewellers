@@ -1,18 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../config/url";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 
 const admin = localStorage.getItem("admin");
 const token = localStorage.getItem("token");
-export const getMessages=createAsyncThunk(
-  "api/getMessages",
-  async()=>{
-    const response=await axios.get(`${BASE_URL}/api/messages`);
-    console.log("response",response.data);
-    return response.data;
-  }
-)
+
+export const getMessages = createAsyncThunk("api/getMessages", async () => {
+  const response = await axios.get(`${BASE_URL}/api/messages`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  console.log("response", response.data);
+  return response.data;
+});
 export const adminLogin = createAsyncThunk(
   "api/adminLogin",
   async (payload, { rejectWithValue }) => {
@@ -27,20 +29,27 @@ export const adminLogin = createAsyncThunk(
     }
   }
 );
-export const addProduct=createAsyncThunk(
-  "api/admin/addProduct", 
-  async(payload,{ rejectWithValue })=>{
-    try{
-      const response=await axios.post(`${BASE_URL}/api/admin/addProduct`,payload);
-      toast.success(response.data);
-    }catch(error){
+export const addProduct = createAsyncThunk(
+  "api/admin/addProduct",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/admin/products`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
       if (!error?.response) {
         throw error;
-      }      
+      }
       return rejectWithValue(error?.response?.data);
     }
-    
-  }  
+  }
 );
 
 // Async thunk action to handle user logout
@@ -55,7 +64,7 @@ const adminSlice = createSlice({
   name: "admin",
   initialState: {
     admin: admin ? JSON.parse(admin) : null,
-    messages:[],
+    messages: [],
     token: token,
     loading: false,
     error: null,
@@ -79,6 +88,21 @@ const adminSlice = createSlice({
         state.loading = false;
         state.error = payload.error.message;
       });
+
+    builder
+      .addCase(addProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addProduct.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.products = payload.createdProduct;
+        // toast.success("Book added successfully");
+      })
+      .addCase(addProduct.rejected, (state) => {
+        state.loading = false;
+        // toast.error(payload.message);
+      });
+
     builder
       .addCase(getMessages.pending, (state) => {
         state.loading = true;
@@ -86,7 +110,7 @@ const adminSlice = createSlice({
       })
       .addCase(getMessages.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.messages =payload.details;
+        state.messages = payload.details;
       })
       .addCase(getMessages.rejected, (state, { payload }) => {
         state.loading = false;

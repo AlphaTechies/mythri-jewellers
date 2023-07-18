@@ -2,41 +2,52 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // import { Rings } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { addProduct } from "../../redux/adminSlice";
+import { fetchProducts } from "../../redux/productSlice";
 
 const AddProduct = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.products.loading);
 
   const [name, setName] = useState("");
-  const [weight, setWeight] = useState(0);
+  const [weight, setWeight] = useState();
   const [description, setDescription] = useState("");
-  const [productImages, setProductImages] = useState(null);
   const [category, setCategory] = useState("");
-  const [price, setPrice] = useState(0);
-  const [ourPrice, setOurPrice] = useState(0);
-
+  const [productImages, setProductImages] = useState({});
+  const [trending, setTrending] = useState("");
+  const [price, setPrice] = useState();
+  const [ourPrice, setOurPrice] = useState();
+ const formData = new FormData();
   const handleFileChange = (e) => {
-    setProductImages(e.target.files[0]);
-    // toast.success("Cover image uploaded successfully");
+    const myFiles = e.target.files;
+
+    
+
+    Object.keys(myFiles).forEach((key) => {
+      formData.append(myFiles.item(key).name, myFiles.item(key));
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+   
     formData.append("name", name);
-    formData.append("author", author);
+    formData.append("weight", weight);
+    formData.append("price", price);
+    formData.append("ourPrice", ourPrice);
     formData.append("description", description);
-    formData.append("coverImage", coverImage);
+    formData.append("productImages", productImages);
     formData.append("category", category);
+    formData.append("trending", trending);
 
     try {
+      console.log("formData", formData.get("productImages"));
       await dispatch(addProduct(formData));
-      navigate("/", { replace: true });
+      dispatch(fetchProducts());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -63,7 +74,7 @@ const AddProduct = () => {
     <section className="bg-secondary">
       <div className="pt-24 max-w-7xl mx-auto px-8">
         <h2 className="mb-4 text-xl font-bold text-primary">Add Product</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="mulipart">
           <div className="grid gap-4 sm:grid-cols-2 bg-white border-2 border-primary rounded-lg p-4 sm:gap-6">
             <div className="sm:col-span-2">
               <label
@@ -99,39 +110,87 @@ const AddProduct = () => {
                 <option value="" disabled>
                   Select category
                 </option>
-                <option value="fiction">Fiction</option>
-                <option value="non-fiction">Non-fiction</option>
-                <option value="mystery">Mystery</option>
-                <option value="romance">Romance</option>
-                <option value="biography">Biography</option>
-                <option value="history">History</option>
-                <option value="business">Business</option>
-                <option value="self-help">Self-help</option>
-                <option value="fantasy">Fantasy</option>
-                <option value="thriller">Thriller</option>
-                <option value="horror">Horror</option>
-                <option value="children">Children</option>
-                <option value="comics">Comics</option>
-                <option value="cookbooks">Cooking</option>
-                <option value="journals">Journals</option>
-                <option value="poetry">Poetry</option>
+                <option value="Necklace">Necklace</option>
+                <option value="Bangles">Bangles</option>
+                <option value="Rings">Rings</option>
+                <option value="Watches">Watches</option>
               </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="trending"
+                className="block mb-2 text-sm font-medium text-black"
+              >
+                Trending
+              </label>
+              <input
+                type="radio"
+                name="trending"
+                onClick={(e) => setTrending(e.target.value)}
+                value="true"
+              />
+              True
+              <input
+                type="radio"
+                name="trending"
+                onClick={(e) => setTrending(e.target.value)}
+                value="false"
+              />
+              False
+            </div>
+
+            <div className="w-full">
+              <label
+                htmlFor="price"
+                className="block mb-2 text-sm font-medium text-black"
+              >
+                Price
+              </label>
+              <input
+                type="number"
+                name="price"
+                id="price"
+                className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 placeholder-gray-500 caret-black block w-full p-2.5"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="Product Price"
+                required
+              />
             </div>
             <div className="w-full">
               <label
-                htmlFor="author"
+                htmlFor="ourPrice"
                 className="block mb-2 text-sm font-medium text-black"
               >
-                Author
+                Our Price
               </label>
               <input
-                type="text"
-                name="author"
-                id="author"
+                type="number"
+                name="ourPrice"
+                id="ourPrice"
                 className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 placeholder-gray-500 caret-black block w-full p-2.5"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
+                value={ourPrice}
+                onChange={(e) => setOurPrice(e.target.value)}
                 placeholder="Book author"
+                required
+              />
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="weight"
+                className="block mb-2 text-sm font-medium text-black"
+              >
+                Weight
+              </label>
+              <input
+                type="number"
+                name="weight"
+                id="weight"
+                className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 placeholder-gray-500 caret-black block w-full p-2.5"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                placeholder="Product Weight"
                 required
               />
             </div>
@@ -154,16 +213,18 @@ const AddProduct = () => {
 
             <div>
               <label
-                htmlFor="coverImage"
+                htmlFor="productImages"
                 className="block mb-2 text-sm font-medium text-black"
               >
-                Cover Image
+                Product Images
               </label>
               <input
                 type="file"
-                name="coverImage"
-                id="coverImage"
-                accept="image/*"
+                name="productImages"
+                id="productImages"
+                
+                multiple
+                
                 className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 onChange={handleFileChange}
               />
@@ -173,7 +234,7 @@ const AddProduct = () => {
             type="submit"
             className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white bg-primary rounded-lg focus:outline-none focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
           >
-            Add Book
+            Add Product
           </button>
         </form>
       </div>
