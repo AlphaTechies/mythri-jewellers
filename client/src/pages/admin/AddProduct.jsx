@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 // import { Rings } from "react-loader-spinner";
 // import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import { addProduct } from "../../redux/adminSlice";
 import { fetchProducts } from "../../redux/productSlice";
 
 const AddProduct = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.products.loading);
 
@@ -16,59 +15,47 @@ const AddProduct = () => {
   const [weight, setWeight] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [productImages, setProductImages] = useState({});
+  const [productImages, setProductImages] = useState([]);
   const [trending, setTrending] = useState("");
   const [price, setPrice] = useState();
   const [ourPrice, setOurPrice] = useState();
- const formData = new FormData();
+  const formData = new FormData();
+
   const handleFileChange = (e) => {
     const myFiles = e.target.files;
-
-    
+    const selectedFiles = [];
 
     Object.keys(myFiles).forEach((key) => {
-      formData.append(myFiles.item(key).name, myFiles.item(key));
+      selectedFiles.push(myFiles.item(key));
     });
+
+    setProductImages(selectedFiles);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   
     formData.append("name", name);
     formData.append("weight", weight);
     formData.append("price", price);
     formData.append("ourPrice", ourPrice);
     formData.append("description", description);
-    formData.append("productImages", productImages);
     formData.append("category", category);
     formData.append("trending", trending);
 
+    productImages.forEach((file) => {
+      formData.append("productImages", file);
+    });
+
+    console.log("formData", formData.getAll("productImages"));
+
     try {
-      console.log("formData", formData.get("productImages"));
       await dispatch(addProduct(formData));
       dispatch(fetchProducts());
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
-  // if (loading) {
-  //   return (
-  //     <div className="flex justify-center items-center h-screen">
-  //       <Rings
-  //         height="80"
-  //         width="80"
-  //         color="#523C1E"
-  //         radius="6"
-  //         wrapperStyle={{}}
-  //         wrapperClass=""
-  //         visible={true}
-  //         ariaLabel="rings-loading"
-  //       />
-  //     </div>
-  //   );
-  // }
 
   return (
     <section className="bg-secondary">
@@ -222,9 +209,7 @@ const AddProduct = () => {
                 type="file"
                 name="productImages"
                 id="productImages"
-                
                 multiple
-                
                 className="bg-white border border-black text-black text-sm rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 onChange={handleFileChange}
               />
