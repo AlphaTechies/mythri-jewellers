@@ -8,15 +8,17 @@ import LoginPage from "./pages/admin/Login";
 import Responses from "./pages/admin/Responses";
 import Dashboard from "./pages/admin/Dashboard";
 import AddProduct from "./pages/admin/AddProduct";
+import ImageSlider from "./components/ImageSlider";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/product" element={<Product />} />
+        <Route path="/demo" element={<ImageSlider />} />
         <Route path="/category/:categoryName" element={<Category />} />
         <Route
-          path="/category/:categoryName/:productname"
+          path="/category/:categoryName/:productId"
           element={<ProductOverview />}
         />
         <Route path="/admin" element={<ProtectedLayout />}>

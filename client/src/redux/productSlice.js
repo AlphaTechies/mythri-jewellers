@@ -2,19 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../config/url";
 
-export const fetchProducts = createAsyncThunk(
-  "api/products",
-  async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/products/`);
-      return response.data;
-    } catch (error) {
-      if (!error?.response) {
-        throw error;
-      }
+export const fetchProducts = createAsyncThunk("api/products", async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/products/`);
+    return response.data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
     }
   }
-);
+});
 
 export const fetchProduct = createAsyncThunk(
   "api/products/:id",
@@ -38,6 +35,7 @@ const productSlice = createSlice({
   initialState: {
     products: [],
     product: {},
+    productImages: [],
     loading: false,
     error: null,
   },
@@ -63,6 +61,7 @@ const productSlice = createSlice({
       .addCase(fetchProduct.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.product = payload.product;
+        state.productImages = payload.product.images;
       })
       .addCase(fetchProduct.rejected, (state) => {
         state.loading = false;
