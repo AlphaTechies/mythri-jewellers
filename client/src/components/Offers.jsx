@@ -11,7 +11,7 @@ const Offers = () => {
       try {
         await dispatch(fetchProducts());
         console.log(products);
-        console.log(products[0].discount);
+        console.log(products[0]);
       } catch (error) {
         console.log(error.message);
       }
@@ -30,13 +30,13 @@ const Offers = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        {products.filter((item)=>item.discount>20).map((product, index) => (
+        {products.filter((item)=>((item.price - item.ourPrice) * 100) /item.price> 50).map((product, index) => (
           <Link key={index}>
             <div className="rounded-xl bg-secondary relative">
               <img
-                src={product.image}
+                src={product.images.filter((img)=>img!=null)[0]}
                 alt={product.name}
-                className="object-cover w-full h-full rounded-md"
+                className="object-cover w-full h-96 rounded-md"
               />
               <div className="absolute inset-0 rounded-md bg-gradient-to-t from-primary to-transparent"></div>
 
@@ -47,7 +47,7 @@ const Offers = () => {
                 <div className="flex items-center justify-center text-secondary mt-2">
                   <p className="text-sm line-through">{product.price}</p>
                   <p className="ml-2 text-xl font-semibold">
-                    {product.discountedPrice}
+                    {product.price-product.ourPrice}
                   </p>
                 </div>
                 <button className="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-secondary">
