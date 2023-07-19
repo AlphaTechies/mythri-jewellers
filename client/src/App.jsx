@@ -9,6 +9,7 @@ import Responses from "./pages/admin/Responses";
 import Dashboard from "./pages/admin/Dashboard";
 import AddProduct from "./pages/admin/AddProduct";
 import ImageSlider from "./components/ImageSlider";
+import Offers from "./components/Offers";
 function App() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/demo" element={<ImageSlider />} />
         <Route path="/category/:categoryName" element={<Category />} />
+        <Route path="/offers/:categoryName" element={<Offers/>} />
         <Route
           path="/category/:categoryName/:productId"
           element={<ProductOverview />}

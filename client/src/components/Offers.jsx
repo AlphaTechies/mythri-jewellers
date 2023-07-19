@@ -1,17 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchProducts } from "../redux/productSlice";
 
 const Offers = () => {
   const products = useSelector((store) => store.products.products);
   const dispatch = useDispatch();
+  const params=useParams();
+  const{categoryName}=params;
   useEffect(() => {
     const fetchResult = async () => {
       try {
         await dispatch(fetchProducts());
-        console.log(products);
-        console.log(products[0]);
+        console.log(categoryName);
+        const currentProducts=products.filter((item) => {
+          return ((item.price - item.ourPrice) * 100) / item.price > 50 && item.category === categoryName;
+        });
+        console.log(currentProducts);
       } catch (error) {
         console.log(error.message);
       }
@@ -30,7 +35,9 @@ const Offers = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 py-10 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        {products.filter((item)=>((item.price - item.ourPrice) * 100) /item.price> 50).map((product, index) => (
+      {products.filter((item) => {
+          return ((item.price - item.ourPrice) * 100) / item.price>30 && item.category === categoryName;
+        }).map((product, index) => (
           <Link key={index}>
             <div className="rounded-xl bg-secondary relative">
               <img

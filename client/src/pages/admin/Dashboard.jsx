@@ -38,7 +38,7 @@ const Dashboard = () => {
   };
 
   const handleOfferChange = (e) => {
-    setOfferFilter(e.target.checked);
+    setOfferFilter(e.target.value);
   };
 
   // Filtering the products based on selected filters
@@ -48,7 +48,7 @@ const Dashboard = () => {
     if (priceFilter !== "All" && product.price > parseInt(priceFilter, 10))
       return false;
     if (trendingFilter && !product.trending) return false;
-    if (offerFilter && !product.offer) return false;
+    if (offerFilter !== "All" && (parseInt(((product.price - product.ourPrice) * 100) / product.price)) < offerFilter) return false;
     return true;
   });
 
@@ -91,7 +91,7 @@ const Dashboard = () => {
         </label>
         <select
           id="priceFilter"
-          className="px-4 py-2 border rounded-md"
+          className="px-4 py-2 border rounded-md mr-2"
           value={priceFilter}
           onChange={handlePriceChange}
         >
@@ -100,7 +100,22 @@ const Dashboard = () => {
           <option value="100">Less than 100</option>
           {/* Add more price options here */}
         </select>
-
+        <label htmlFor="offerFilter" className="mr-2">
+          Offers
+        </label>
+        <select
+          id="offerFilter"
+          className="px-4 py-2 border rounded-md"
+          value={offerFilter}
+          onChange={handleOfferChange}
+        >
+          <option value="All">All</option>
+          <option value="10">&gt;10</option>
+          <option value="30">&gt;30</option>
+          <option value="50">&gt;50</option>
+          <option value="75">&gt;75</option>
+          {/* Add more categories here */}
+        </select>
         <label htmlFor="trendingFilter" className="ml-4 mr-2">
           Trending:
         </label>
@@ -111,15 +126,6 @@ const Dashboard = () => {
           onChange={handleTrendingChange}
         />
 
-        <label htmlFor="offerFilter" className="ml-4 mr-2">
-          Offer:
-        </label>
-        <input
-          type="checkbox"
-          id="offerFilter"
-          checked={offerFilter}
-          onChange={handleOfferChange}
-        />
       </div>
 
       <table className="w-full border-collapse">
@@ -146,7 +152,7 @@ const Dashboard = () => {
                 {product.trending ? "Yes" : "No"}
               </td>
               <td className="border text-center px-4 py-2">
-                {product.offer ? "Yes" : "No"}
+                {parseInt(((product.price - product.ourPrice) * 100) / product.price)}%
               </td>
             </tr>
           ))}
