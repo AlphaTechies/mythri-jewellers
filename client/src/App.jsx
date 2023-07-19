@@ -9,6 +9,7 @@ import Responses from "./pages/admin/Responses";
 import Dashboard from "./pages/admin/Dashboard";
 import AddProduct from "./pages/admin/AddProduct";
 import ImageSlider from "./components/ImageSlider";
+import UpdateProduct from "./pages/admin/UpdateProduct";
 function App() {
   return (
     <Router>
@@ -23,8 +24,9 @@ function App() {
         />
         <Route path="/admin" element={<ProtectedLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="product" element={<AddProduct />} />
+          <Route path="addProduct" element={<AddProduct />} />
           <Route path="responses" element={<Responses />} />
+          <Route path="updateProduct/:productId" element={<UpdateProduct />} />
         </Route>
         <Route path="login" element={<LoginPage />} />
       </Routes>

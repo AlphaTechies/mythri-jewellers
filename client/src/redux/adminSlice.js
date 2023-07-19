@@ -52,6 +52,30 @@ export const addProduct = createAsyncThunk(
   }
 );
 
+export const updateProduct = createAsyncThunk(
+  "api/admin/updateProduct",
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const response = await axios.patch(
+        `${BASE_URL}/api/admin/product/${payload.get("id")}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const deleteProduct = createAsyncThunk(
   "api/admin/deleteProduct",
   async (payload, { rejectWithValue }) => {
@@ -122,6 +146,20 @@ const adminSlice = createSlice({
         // toast.success("Book added successfully");
       })
       .addCase(addProduct.rejected, (state) => {
+        state.loading = false;
+        // toast.error(payload.message);
+      });
+
+    builder
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.products = payload.products;
+        // toast.success("Product added successfully");
+      })
+      .addCase(updateProduct.rejected, (state) => {
         state.loading = false;
         // toast.error(payload.message);
       });

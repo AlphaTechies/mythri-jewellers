@@ -168,7 +168,10 @@ const Dashboard = () => {
               </td>
               <td className="border text-center px-4 py-2">
                 <div className="flex justify-center gap-x-4">
-                  <Link className="text-blue-600 hover:text-blue-800">
+                  <Link
+                    to={`/admin/updateProduct/${product._id}`}
+                    className="text-blue-600 hover:text-blue-800"
+                  >
                     <FaEdit />
                   </Link>
 
