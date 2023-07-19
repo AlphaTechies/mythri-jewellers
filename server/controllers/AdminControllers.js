@@ -219,6 +219,7 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
 //Remove Product
 export const removeProduct = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
+  console.log(product);
   if (!product) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -226,7 +227,10 @@ export const removeProduct = asyncHandler(async (req, res, next) => {
   }
   try {
     const update = await Product.findByIdAndDelete(req.params.id);
-    return res.status(StatusCodes.OK).json({ message: "Product Removed !" });
+    const products = await Product.find();
+    return res
+      .status(StatusCodes.OK)
+      .json({ products, message: "Product Removed !" });
   } catch (err) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)

@@ -52,6 +52,29 @@ export const addProduct = createAsyncThunk(
   }
 );
 
+export const deleteProduct = createAsyncThunk(
+  "api/admin/deleteProduct",
+  async (payload, { rejectWithValue }) => {
+    console.log("payload", payload);
+    try {
+      const response = await axios.delete(
+        `${BASE_URL}/api/admin/product/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Async thunk action to handle user logout
 export const adminLogout = createAsyncThunk("auth/logout", async () => {
   // Clearing local storage and reset the state
@@ -99,6 +122,21 @@ const adminSlice = createSlice({
         // toast.success("Book added successfully");
       })
       .addCase(addProduct.rejected, (state) => {
+        state.loading = false;
+        // toast.error(payload.message);
+      });
+
+    builder
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteProduct.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.products = payload.products;
+        // toast.success("Book deleted successfully");
+      })
+      .addCase(deleteProduct.rejected, (state) => {
         state.loading = false;
         // toast.error(payload.message);
       });
