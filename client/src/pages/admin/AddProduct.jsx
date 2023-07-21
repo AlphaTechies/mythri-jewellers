@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/adminSlice";
 import { fetchProducts } from "../../redux/productSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.products.loading);
 
@@ -39,6 +41,7 @@ const AddProduct = () => {
     try {
       await dispatch(addProduct(formData));
       dispatch(fetchProducts());
+      navigate("/admin", { replace: true });
     } catch (error) {
       console.error("Error:", error);
     }

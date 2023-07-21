@@ -11,28 +11,38 @@ import AddProduct from "./pages/admin/AddProduct";
 import ImageSlider from "./components/ImageSlider";
 import Offers from "./components/Offers";
 import UpdateProduct from "./pages/admin/UpdateProduct";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/product" element={<Product />} />
-        <Route path="/demo" element={<ImageSlider />} />
-        <Route path="/category/:categoryName" element={<Category />} />
-        <Route path="/offers/:categoryName" element={<Offers/>} />
-        <Route
-          path="/category/:categoryName/:productId"
-          element={<ProductOverview />}
-        />
-        <Route path="/admin" element={<ProtectedLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="addProduct" element={<AddProduct />} />
-          <Route path="responses" element={<Responses />} />
-          <Route path="updateProduct/:productId" element={<UpdateProduct />} />
-        </Route>
-        <Route path="login" element={<LoginPage />} />
-      </Routes>
-    </Router>
+    <>
+      <div>
+        <Toaster position="top-right"></Toaster>
+      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/product" element={<Product />} />
+          <Route path="/demo" element={<ImageSlider />} />
+          <Route path="/category/:categoryName" element={<Category />} />
+          <Route path="/offers/:categoryName" element={<Offers />} />
+          <Route
+            path="/category/:categoryName/:productId"
+            element={<ProductOverview />}
+          />
+          <Route path="/admin" element={<ProtectedLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="addProduct" element={<AddProduct />} />
+            <Route path="responses" element={<Responses />} />
+            <Route
+              path="updateProduct/:productId"
+              element={<UpdateProduct />}
+            />
+          </Route>
+          <Route path="login" element={<LoginPage />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

@@ -4,8 +4,10 @@ import { updateProduct } from "../../redux/adminSlice";
 import { fetchProducts, handleProductChange } from "../../redux/productSlice";
 import { fetchProduct } from "../../redux/productSlice";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProduct = () => {
+  const navigate = useNavigate();
   const { productId } = useParams();
   const dispatch = useDispatch();
   const { product } = useSelector((store) => store.products);
@@ -64,6 +66,7 @@ const UpdateProduct = () => {
       console.log(formData.get("id"));
       await dispatch(updateProduct(formData));
       dispatch(fetchProducts());
+      navigate("/admin", { replace: true });
     } catch (error) {
       console.error("Error:", error);
     }

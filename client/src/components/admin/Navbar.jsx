@@ -39,7 +39,7 @@ export function Navbar() {
     <header className="fixed left-0 top-0 z-50 w-full bg-secondary border-b-2 border-primary">
       <div className="mx-auto relative flex max-w-7xl items-center md:justify-between px-2 py-2 lg:py-4 sm:px-6 lg:px-8">
         <div className="inline-flex flex-1 md:flex-initial items-center space-x-2">
-          <Link to="/" className="ml-2 flex lg:ml-0 gap-x-2">
+          <Link to="/" className="ml-2 flex text-primary lg:ml-0 gap-x-2">
             <p className="font-bold text-3xl">Mythri</p>
           </Link>
         </div>

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../config/url";
-// import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const admin = localStorage.getItem("admin");
 const token = localStorage.getItem("token");
@@ -130,10 +130,12 @@ const adminSlice = createSlice({
         localStorage.setItem("token", token);
         state.admin = adminData;
         state.token = token;
+        toast.success("Login successful!");
       })
       .addCase(adminLogin.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.error.message;
+        toast.error("Login failed!");
       });
 
     builder
@@ -143,11 +145,11 @@ const adminSlice = createSlice({
       .addCase(addProduct.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.products = payload.createdProduct;
-        // toast.success("Book added successfully");
+        toast.success("Product added successfully");
       })
-      .addCase(addProduct.rejected, (state) => {
+      .addCase(addProduct.rejected, (state, { payload }) => {
         state.loading = false;
-        // toast.error(payload.message);
+        toast.error(payload.message);
       });
 
     builder
@@ -157,11 +159,11 @@ const adminSlice = createSlice({
       .addCase(updateProduct.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.products = payload.products;
-        // toast.success("Product added successfully");
+        toast.success("Product updated successfully");
       })
-      .addCase(updateProduct.rejected, (state) => {
+      .addCase(updateProduct.rejected, (state, { payload }) => {
         state.loading = false;
-        // toast.error(payload.message);
+        toast.error(payload.message);
       });
 
     builder
@@ -172,11 +174,11 @@ const adminSlice = createSlice({
       .addCase(deleteProduct.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.products = payload.products;
-        // toast.success("Book deleted successfully");
+        toast.success("Product deleted successfully");
       })
-      .addCase(deleteProduct.rejected, (state) => {
+      .addCase(deleteProduct.rejected, (state, { payload }) => {
         state.loading = false;
-        // toast.error(payload.message);
+        toast.error(payload.message);
       });
 
     builder
@@ -196,7 +198,7 @@ const adminSlice = createSlice({
     builder.addCase(adminLogout.fulfilled, (state) => {
       state.admin = null;
       state.token = null;
-      // toast.success("Logout successful!");
+      toast.success("Logout successful!");
     });
   },
 });
