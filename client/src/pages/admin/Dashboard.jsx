@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../../redux/productSlice";
+import { deleteProduct } from "../../redux/adminSlice";
 import ReactPaginate from "react-paginate";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const products = useSelector((store) => store.products.products);
+
+  const calculateProductId = (index) => {
+    return (currentPage - 1) * perPage + index + 1;
+  };
 
   useEffect(() => {
     const fetchResult = async () => {
@@ -17,6 +24,15 @@ const Dashboard = () => {
     };
     fetchResult();
   }, [dispatch]);
+
+  const handleDelete = async (id) => {
+    try {
+      await dispatch(deleteProduct(id));
+      await dispatch(fetchProducts());
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [priceFilter, setPriceFilter] = useState("All");
@@ -83,7 +99,6 @@ const Dashboard = () => {
           <option value="Bangles">Bangles</option>
           <option value="Rings">Rings</option>
           <option value="Watches">Watches</option>
-          {/* Add more categories here */}
         </select>
 
         <label htmlFor="priceFilter" className="ml-4 mr-2">
@@ -137,12 +152,15 @@ const Dashboard = () => {
             <th className="px-4 py-2">Price</th>
             <th className="px-4 py-2">Trending</th>
             <th className="px-4 py-2">Offer</th>
+            <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {currentProducts.map((product) => (
+          {currentProducts.map((product, index) => (
             <tr key={product.id}>
-              <td className="border text-center px-4 py-2">{product._id}</td>
+              <td className="border text-center px-4 py-2">
+                {calculateProductId(index)}
+              </td>
               <td className="border text-center px-4 py-2">{product.name}</td>
               <td className="border text-center px-4 py-2">
                 {product.category}
@@ -153,6 +171,23 @@ const Dashboard = () => {
               </td>
               <td className="border text-center px-4 py-2">
                 {parseInt(((product.price - product.ourPrice) * 100) / product.price)}%
+              </td>
+              <td className="border text-center px-4 py-2">
+                <div className="flex justify-center gap-x-4">
+                  <Link
+                    to={`/admin/updateProduct/${product._id}`}
+                    className="text-blue-600 hover:text-blue-800"
+                  >
+                    <FaEdit />
+                  </Link>
+
+                  <button
+                    onClick={() => handleDelete(product._id)}
+                    className="mr-2 text-red-600 hover:text-red-800"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

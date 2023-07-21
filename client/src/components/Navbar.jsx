@@ -1,20 +1,21 @@
 import React from "react";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-scroll";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-scroll";
+import { Link } from "react-router-dom";
+import { handleScroll } from "../utils/handleScroll";
 
 const routes = [
   {
     name: "Home",
-    href: "home",
+    href: "#home",
   },
   {
     name: "About",
-    href: "about",
+    href: "#about",
   },
   {
     name: "Categories",
-    href: "categories",
+    href: "#categories",
     subMenu: [
       { name: "Earring", href: "earring" },
       { name: "Necklace", href: "necklace" },
@@ -43,11 +44,11 @@ const routes = [
   },
   {
     name: "Trending",
-    href: "trending",
+    href: "#trending",
   },
   {
     name: "Offers",
-    href: "offers",
+    href: "#offers",
   },
 ];
 
@@ -67,24 +68,20 @@ export function Navbar() {
     <header className="fixed left-0 top-0 z-50 w-full bg-secondary border-b-2 border-primary">
       <div className="mx-auto relative flex max-w-7xl items-center justify-between px-2 py-2 lg:py-4 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
-          <RouterLink to="/" className="ml-2 flex lg:ml-0 gap-x-2">
+          <Link to="/" className="ml-2 flex lg:ml-0 gap-x-2">
             <p className="font-bold text-primary text-3xl">Mythri</p>
-          </RouterLink>
+          </Link>
         </div>
         <nav className="items-center space-x-4 text-primary hidden lg:block lg:space-x-6">
           {routes.map((route) => (
-            <Link
-              activeClass="active"
-              to={route.href}
-              spy={true}
-              smooth={true}
-              offset={-80}
-              duration={500}
+            <a
+              href={route.href}
               key={route.name}
-              className={"text-lg font-medium cursor-pointer transition-colors"}
+              className={"text-lg font-semibold cursor-pointer"}
+              onClick={handleScroll}
             >
               {route.name}
-            </Link>
+            </a>
           ))}
         </nav>
         <div className="lg:hidden p-2">

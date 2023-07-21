@@ -39,7 +39,13 @@ const productSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    handleProductChange: (state, { payload }) => {
+      console.log(state.product);
+      state.product = { ...state.product, [payload.name]: payload.value };
+      console.log(state.product);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -61,12 +67,14 @@ const productSlice = createSlice({
       .addCase(fetchProduct.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.product = payload.product;
-        state.productImages = payload.product.images;
+        state.productImages = payload.product.images || [];
       })
       .addCase(fetchProduct.rejected, (state) => {
         state.loading = false;
       });
   },
 });
+
+export const { handleProductChange } = productSlice.actions;
 
 export default productSlice.reducer;

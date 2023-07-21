@@ -13,7 +13,7 @@ const routes = [
   },
   {
     name: "Add Product",
-    href: "product",
+    href: "addProduct",
   },
   {
     name: "Responses",

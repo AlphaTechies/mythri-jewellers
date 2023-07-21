@@ -1,53 +1,82 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../../redux/adminSlice";
-import { fetchProducts } from "../../redux/productSlice";
+import { updateProduct } from "../../redux/adminSlice";
+import { fetchProducts, handleProductChange } from "../../redux/productSlice";
+import { fetchProduct } from "../../redux/productSlice";
+import { useParams } from "react-router-dom";
 
-const AddProduct = () => {
+const UpdateProduct = () => {
+  const { productId } = useParams();
   const dispatch = useDispatch();
+  const { product } = useSelector((store) => store.products);
+  console.log(product);
   const loading = useSelector((state) => state.products.loading);
 
-  const [name, setName] = useState("");
-  const [weight, setWeight] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [productImages, setProductImages] = useState([]);
-  const [trending, setTrending] = useState(false);
-  const [price, setPrice] = useState("");
-  const [ourPrice, setOurPrice] = useState("");
+  useEffect(() => {
+    const product = async () => {
+      try {
+        await dispatch(fetchProduct({ id: productId }));
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    product();
+  }, [dispatch, productId]);
+
+  const [currProduct, setCurrProduct] = useState(product);
+
+  const [name, setName] = useState(product.name);
+  const [weight, setWeight] = useState(product.weight);
+  const [description, setDescription] = useState(product.description);
+  const [category, setCategory] = useState(product.category);
+  const [productImages, setProductImages] = useState(product.images || []);
+  const [trending, setTrending] = useState(product.trending);
+  const [price, setPrice] = useState(product.price);
+  const [ourPrice, setOurPrice] = useState(product.ourPrice);
 
   const handleFileChange = (e) => {
     setProductImages(e.target.files);
+  };
+
+  const handleChange = (name, value) => {
+    dispatch(handleProductChange({ name, value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("weight", weight);
-    formData.append("price", price);
-    formData.append("ourPrice", ourPrice);
-    formData.append("description", description);
-    formData.append("category", category);
-    formData.append("trending", trending);
+    formData.append("id", product._id);
+    formData.append("name", product.name);
+    formData.append("weight", product.weight);
+    formData.append("price", product.price);
+    formData.append("ourPrice", product.ourPrice);
+    formData.append("description", product.description);
+    formData.append("category", product.category);
+    formData.append("trending", product.trending);
 
     for (let i = 0; i < productImages.length; i++) {
       formData.append("productImages", productImages[i]);
     }
 
     try {
-      await dispatch(addProduct(formData));
+      console.log(formData.get("id"));
+      await dispatch(updateProduct(formData));
       dispatch(fetchProducts());
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
   return (
     <section className="bg-secondary">
       <div className="py-24 max-w-3xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-primary mb-4">Add Product</h2>
+        <h2 className="text-2xl font-bold text-primary mb-4">Update Product</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="grid grid-cols-2 gap-4 bg-white border border-primary rounded-lg p-4">
             <div className="col-span-2 sm:col-span-1">
@@ -58,8 +87,8 @@ const AddProduct = () => {
                 type="text"
                 id="name"
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={product.name}
+                onChange={(e) => handleChange("name", e.target.value)}
                 placeholder="Enter product name"
                 required
               />
@@ -74,8 +103,8 @@ const AddProduct = () => {
               <select
                 id="category"
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={product.category}
+                onChange={(e) => handleChange("category", e.target.value)}
                 required
               >
                 <option value="" disabled>
@@ -98,8 +127,8 @@ const AddProduct = () => {
                 id="description"
                 rows="4"
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={product.description}
+                onChange={(e) => handleChange("description", e.target.value)}
                 placeholder="Enter product description"
                 required
               ></textarea>
@@ -112,8 +141,8 @@ const AddProduct = () => {
                 type="number"
                 id="weight"
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                value={weight}
-                onChange={(e) => setWeight(e.target.value)}
+                value={product.weight}
+                onChange={(e) => handleChange("weight", e.target.value)}
                 placeholder="Enter product weight"
                 required
               />
@@ -126,8 +155,8 @@ const AddProduct = () => {
                 type="number"
                 id="price"
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={product.price}
+                onChange={(e) => handleChange("price", e.target.value)}
                 placeholder="Enter product price"
                 required
               />
@@ -143,8 +172,8 @@ const AddProduct = () => {
                 type="number"
                 id="ourPrice"
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                value={ourPrice}
-                onChange={(e) => setOurPrice(e.target.value)}
+                value={product.ourPrice}
+                onChange={(e) => handleChange("ourPrice", e.target.value)}
                 placeholder="Enter our price"
                 required
               />
@@ -161,8 +190,8 @@ const AddProduct = () => {
                   type="radio"
                   id="trendingTrue"
                   name="trending"
-                  checked={trending === true}
-                  onChange={() => setTrending(true)}
+                  checked={product.trending === true}
+                  onChange={() => handleChange("trending", true)}
                 />
                 <label htmlFor="trendingTrue" className="ml-2">
                   True
@@ -173,8 +202,8 @@ const AddProduct = () => {
                   type="radio"
                   id="trendingFalse"
                   name="trending"
-                  checked={trending === false}
-                  onChange={() => setTrending(false)}
+                  checked={product.trending === false}
+                  onChange={() => handleChange("trending", false)}
                 />
                 <label htmlFor="trendingFalse" className="ml-2">
                   False
@@ -201,7 +230,7 @@ const AddProduct = () => {
             type="submit"
             className="block mt-4 px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
           >
-            Add Product
+            Update Product
           </button>
         </form>
       </div>
@@ -209,4 +238,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default UpdateProduct;

@@ -190,23 +190,60 @@ export const addProduct = asyncHandler(async (req, res, next) => {
   }
 });
 
-//Update Product
+// Update Product
 export const updateProduct = asyncHandler(async (req, res, next) => {
+  const { name, category, trending, weight, price, ourPrice, description } =
+    req.body;
+  if (
+    !name ||
+    !category ||
+    !trending ||
+    !weight ||
+    !price ||
+    !ourPrice ||
+    !description
+  ) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "Please fill all details", status: "failed" });
+  }
+
   const product = await Product.findById(req.params.id);
   if (!product) {
     return res
       .status(StatusCodes.NOT_FOUND)
-      .json({ message: "User not found!", status: "failed" });
+      .json({ message: "Product not found!", status: "failed" });
   }
+
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true, useFindAndModify: false }
-    );
+    product.name = name;
+    product.category = category;
+    product.trending = trending;
+    product.weight = weight;
+    product.price = price;
+    product.ourPrice = ourPrice;
+    product.description = description;
+
+    if (req.files && req.files.length > 0) {
+      // Update images if new ones are provided
+      for (const file of req.files) {
+        await uploadImage(file, "product-images", product._id);
+      }
+
+      const imageUrls = req.files.map(
+        (file) =>
+          `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/product-images/${product._id}/${file.originalname}`
+      );
+
+      product.images = imageUrls;
+    }
+
+    const updatedProduct = await product.save();
+
+    const products = await Product.find();
     return res.status(StatusCodes.OK).json({
-      message: "Product Updated !",
-      updatedProduct,
+      message: "Product Updated!",
+      products,
       status: "success",
     });
   } catch (err) {
@@ -219,6 +256,7 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
 //Remove Product
 export const removeProduct = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
+  console.log(product);
   if (!product) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -226,7 +264,10 @@ export const removeProduct = asyncHandler(async (req, res, next) => {
   }
   try {
     const update = await Product.findByIdAndDelete(req.params.id);
-    return res.status(StatusCodes.OK).json({ message: "Product Removed !" });
+    const products = await Product.find();
+    return res
+      .status(StatusCodes.OK)
+      .json({ products, message: "Product Removed !" });
   } catch (err) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
