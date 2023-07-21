@@ -5,6 +5,7 @@ import { fetchProducts, handleProductChange } from "../../redux/productSlice";
 import { fetchProduct } from "../../redux/productSlice";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Rings } from "react-loader-spinner";
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -73,7 +74,20 @@ const UpdateProduct = () => {
   };
 
   if (loading) {
-    return <p>Loading</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Rings
+          height="80"
+          width="80"
+          color="#523C1E"
+          radius="6"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="rings-loading"
+        />
+      </div>
+    );
   }
 
   return (

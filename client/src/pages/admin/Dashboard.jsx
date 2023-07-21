@@ -5,10 +5,12 @@ import { deleteProduct } from "../../redux/adminSlice";
 import ReactPaginate from "react-paginate";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Rings } from "react-loader-spinner";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const products = useSelector((store) => store.products.products);
+  const loading = useSelector((store) => store.products.loading);
 
   const calculateProductId = (index) => {
     return (currentPage - 1) * perPage + index + 1;
@@ -64,7 +66,12 @@ const Dashboard = () => {
     if (priceFilter !== "All" && product.price > parseInt(priceFilter, 10))
       return false;
     if (trendingFilter && !product.trending) return false;
-    if (offerFilter !== "All" && (parseInt(((product.price - product.ourPrice) * 100) / product.price)) < offerFilter) return false;
+    if (
+      offerFilter !== "All" &&
+      parseInt(((product.price - product.ourPrice) * 100) / product.price) <
+        offerFilter
+    )
+      return false;
     return true;
   });
 
@@ -81,6 +88,23 @@ const Dashboard = () => {
     (currentPage - 1) * perPage,
     currentPage * perPage
   );
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Rings
+          height="80"
+          width="80"
+          color="#523C1E"
+          radius="6"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="rings-loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-8 shadow-md rounded-md pt-24">
@@ -140,7 +164,6 @@ const Dashboard = () => {
           checked={trendingFilter}
           onChange={handleTrendingChange}
         />
-
       </div>
 
       <table className="w-full border-collapse">
@@ -170,7 +193,10 @@ const Dashboard = () => {
                 {product.trending ? "Yes" : "No"}
               </td>
               <td className="border text-center px-4 py-2">
-                {parseInt(((product.price - product.ourPrice) * 100) / product.price)}%
+                {parseInt(
+                  ((product.price - product.ourPrice) * 100) / product.price
+                )}
+                %
               </td>
               <td className="border text-center px-4 py-2">
                 <div className="flex justify-center gap-x-4">

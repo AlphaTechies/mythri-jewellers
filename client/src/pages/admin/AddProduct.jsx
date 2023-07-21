@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/adminSlice";
 import { fetchProducts } from "../../redux/productSlice";
 import { useNavigate } from "react-router-dom";
+import { Rings } from "react-loader-spinner";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -46,6 +47,23 @@ const AddProduct = () => {
       console.error("Error:", error);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Rings
+          height="80"
+          width="80"
+          color="#523C1E"
+          radius="6"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="rings-loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <section className="bg-secondary">

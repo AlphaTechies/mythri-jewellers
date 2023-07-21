@@ -4,14 +4,14 @@ import { adminLogin } from "../../redux/adminSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Header from "../../components/Header";
-// import { Rings } from "react-loader-spinner";
+import { Rings } from "react-loader-spinner";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const admin = useSelector((state) => state.admin.admin);
-  //   const loading = useSelector((state) => state.auth.loading);
+  const loading = useSelector((state) => state.admin.loading);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,22 +40,22 @@ const LoginPage = () => {
     }
   }, [admin, navigate]);
 
-  //   if (loading) {
-  //     return (
-  //       <div className="flex justify-center items-center h-screen">
-  //         <Rings
-  //           height="80"
-  //           width="80"
-  //           color="#21BF73"
-  //           radius="6"
-  //           wrapperStyle={{}}
-  //           wrapperClass=""
-  //           visible={true}
-  //           ariaLabel="rings-loading"
-  //         />
-  //       </div>
-  //     );
-  //   }
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Rings
+          height="80"
+          width="80"
+          color="#523C1E"
+          radius="6"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="rings-loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <section>
